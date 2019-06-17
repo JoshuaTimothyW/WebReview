@@ -23,6 +23,6 @@ Route::get('/home', function () {
     return view('master');
 });
 
-Route::get('/about', function () {
-    return view('about');
+Route::get('/about/{id}', function ($id) {
+    return view('about',['id'=>$id]);
 });
