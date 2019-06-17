@@ -15,10 +15,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/home', function() {
-    return view('home');
+Route::get('/json', function () {
+    return response()->json(['name'=>'Hello World','state'=>'Gujarat']);
 });
 
-Route::get('/post', function () {
-    return view('post');
+Route::get('/home', function () {
+    return view('master');
+});
+
+Route::post('/about/{id}', function ($id) {
+    return view('about',['id'=>$id]);
 });
