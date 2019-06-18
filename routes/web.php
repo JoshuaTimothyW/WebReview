@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Request;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,12 +18,15 @@ Route::get('/', function () {
 
 Route::get('/json', function () {
     return response()->json(['name'=>'Hello World','state'=>'Gujarat']);
+    // var_dump($_POST);
 });
 
 Route::get('/home', function () {
     return view('home');
 });
 
-Route::get('/about/{id}', function ($id) {
-    return view('about',['id'=>$id]);
-});
+Route::post('/about','Main@post');
+
+// Route::post('users/{id}', function ($id) {
+    
+// });
