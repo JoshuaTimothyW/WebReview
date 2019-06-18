@@ -20,7 +20,7 @@ Route::get('/json', function () {
 });
 
 Route::get('/home', function () {
-    return view('master');
+    return view('home');
 });
 
 Route::get('/about/{id}', function ($id) {

@@ -7,9 +7,10 @@
     <title>Home</title>
 </head>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
 
 <body>
-    <h1>Title</h1>
+      @include('navbar')
     <div class="row">
         <div class="col-md-4">
             <ul class="nav flex-column">
@@ -35,7 +36,7 @@
             </ul>
       </div>
       <div class="col-md-4">
-        @yield('post-home')
+        @component('post-home')@endcomponent
       </div>
       <div class="col-md-4">
 
