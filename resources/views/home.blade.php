@@ -11,9 +11,10 @@
 
 <body>
       @include('navbar')
+      <br>
     <div class="row">
-        <div class="col-md-4">
-            <ul class="nav flex-column">
+        <div class="col-md-4 border">
+            <ul class="nav nav-tabs flex-column sticky-top">
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Active</a>
                     <div class="dropdown-menu">
@@ -38,11 +39,10 @@
       <div class="col-md-4">
         @component('post-home')@endcomponent
       </div>
-      <div class="col-md-4">
+      <div class="col-md-4 border">
 
       </div>
     </div>
-        
         
 </body>
 

@@ -25,8 +25,10 @@ Route::get('/home', function () {
     return view('home');
 });
 
-Route::post('/about','Main@post');
+Route::post('/post','Main@post');
 
-// Route::post('users/{id}', function ($id) {
-    
-// });
+Route::get('/register', function () {
+    return view('register');
+});
+
+Route::post('/register/submit','Main@register_account');
