@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Request;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('vueee');
 });
 
 Route::get('/json', function () {
