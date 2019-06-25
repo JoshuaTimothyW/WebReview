@@ -13,7 +13,8 @@ return [
     |
     */
 
-    'default' => env('FILESYSTEM_DRIVER', 'local'),
+    'default' => env('FILESYSTEM_DRIVER', 'publicpath'),
+    // 'default' => env('FILESYSTEM_DRIVER', 'local'),
 
     /*
     |--------------------------------------------------------------------------
@@ -63,6 +64,10 @@ return [
             'bucket' => env('AWS_BUCKET'),
         ],
 
+        'publicpath' => [
+            'driver' => 'local',
+            'root' => public_path(),
+        ],
     ],
 
 ];

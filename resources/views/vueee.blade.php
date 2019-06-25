@@ -19,6 +19,7 @@
 {{-- Resource itu kebalikannya --}}
 
 <body>
+    <img src="{{ \Illuminate\Support\Facades\Storage::url($user->img) }}" alt="image">
     <div id="app">
         <example-component></example-component>
     </div>

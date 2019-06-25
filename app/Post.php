@@ -4,16 +4,16 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Member extends Model
+class Post extends Model
 {
-    protected $table = 'members';
-
+    public $table = 'post';
+    
     public $timestamps = false;
 
-    function forums(){
-    	return $this->hasMany('App\Forum');
+    function members(){
+        return $this->belongsTo(Member::class,'user_id');
     }
-    
+
     function threads(){
         return $this->hasMany('App\Thread');
     }

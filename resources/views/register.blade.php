@@ -10,11 +10,13 @@
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
 
 <body>
-    @include('navbar')
+    @include('comp/navbar')
     <br><br><br>
     <div class="row">
         <div class="col-md-4"></div>
         <div class="col-md-4">
+                <h1 class="text-center">Register Account</h1>
+                <br><br>
                 <form action="/register/submit" enctype="multipart/form-data" method="POST">
                     {{ csrf_field() }}
                         <div class="form-group row">
@@ -31,10 +33,7 @@
                                 <small class="text-muted">Between 3 and 25 characters</small>
                           </div>
                         </div>
-                        <div class="form-group row">
-                            <label for="fileImg" class="col-sm-2"></label>
-                            <input type="file" class="col-sm-10" id="fileImg" name="img" accept=".jpeg, .png, .jpg">
-                        </div>
+                        @include('comp/errormsg')
                         <br><br>
                         <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
