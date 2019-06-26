@@ -13,8 +13,7 @@
 <body>
     @include('comp/navbar')
     
-    <div class="container">
-        <div class="row">
+    <div class="container-fluid">
             <div class="col-md-10 col-md-offset-1v row">
                     <div class="btn-group-vertical">
                         <img src="{{ session()->get('member')->img }}" style="width:150px; height:150px; float:left; border-radius:50%; margin-right:25px;">
@@ -22,15 +21,14 @@
                     </div> 
                     <div class="btn-group-vertical">
                         <h2>{{ session()->get('member')->name }}'s Profile</h2>
+                        <label>Update Profile Image</label>
                         <form enctype="multipart/form-data" action="/profile/submit" method="POST">
-                            <label>Update Profile Image</label>
                             <input type="file" name="avatar">                        
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <button type="submit" class="pull-right btn btn-sm btn-primary">Update Profile</button>
                         </form>
                     </div>                       
             </div>
-        </div>
     </div>
 
     @include('comp/errormsg')

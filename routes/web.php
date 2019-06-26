@@ -27,11 +27,9 @@ Route::get('/login', function () {
     return view('login');
 });
 
-// Route::get('/home','Main@index_post');
+Route::get('/home','PostController@index_post');
 
-Route::get('/home','Main@index_post');
-
-Route::post('/post','Main@post');
+Route::post('/post','PostController@post');
 
 Route::post('/register/submit','Main@register_account');
 Route::post('/login/submit','Main@login_account');
@@ -43,8 +41,9 @@ Route::post('/login/submit','Main@login_account');
     }); 
     Route::post('/profile/submit','Main@profile_edit');
     Route::get('/profile/reset','Main@reset');
-    Route::get('/mypost','Main@mypost');
-    Route::get('/mypost/create',function(){
-        return "Sorry, under maintainance";
+    Route::get('/mypost','PostController@mypost');
+    Route::get('/postadd',function(){
+        return view('post_add');
     });
+    Route::post('/postadd/submit','PostController@create');
 // });

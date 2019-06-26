@@ -15,32 +15,10 @@ use App\Post;
 
 class Main extends Controller
 {
-    function index_post(Request $request){
-        
-        if (Post::where('status','ACTIVE')->count() < 1) {
-            $post = "No Post";
-        } else {
-            $post = Post::where('status','ACTIVE')->get();
-        }
 
-        return view('home',['post'=>$post]);
-    }
+    
 
-    function post(Request $request){
-        $post = Post::where('id',$request->id)->first();
-        return view('post',['post'=>$post]);
-    }
-
-    function mypost(){
-
-        if (Post::where('status','ACTIVE')->count() < 1) {
-            $post = "No Post";
-        } else {
-            $post = Post::where('user_id',session()->get('member')->id)->get();
-        }
-        
-        return view('mypost',['post'=>$post]);
-    }
+    
 
     public function testdd() {
         // return Storage::putFile(
@@ -112,12 +90,12 @@ class Main extends Controller
     function profile_edit(Request $request){
 
         $validator = Validator::make($request->all(), [
-            'avatar' => 'required',
+            'avatar' => 'mimes:jpeg,jpg,png,gif|required',
         ]);
 
         if ($validator->fails()) {
             return redirect('profile')
-                        ->withErrors("Image Required")
+                        ->withErrors($validator)
                         ->withInput();
         }
 

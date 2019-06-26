@@ -14,10 +14,15 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index_post(Request $request)
     {
-        $store = Post::all();
-        return dd($post);
+        if (Post::where('status','ACTIVE')->count() < 1) {
+            $post = "No Post";
+        } else {
+            $post = Post::where('status','ACTIVE')->get();
+        }
+
+        return view('home',['post'=>$post]);
     }
 
     /**
@@ -25,9 +30,10 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function post(Request $request)
     {
-        //
+        $post = Post::where('id',$request->id)->first();
+        return view('post',['post'=>$post]);
     }
 
     /**
@@ -36,9 +42,15 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    function mypost(){
+
+        if (Post::where('status','ACTIVE')->count() < 1) {
+            $post = "No Post";
+        } else {
+            $post = Post::where('user_id',session()->get('member')->id)->get();
+        }
+        
+        return view('mypost',['post'=>$post]);
     }
 
     /**
@@ -47,9 +59,15 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function create(Request $request)
     {
-        //
+        $post = new Post();
+        $post->title = $request->title;
+        $post->description = $request->editor1;
+        $post->user_id = session()->get('member')->id;
+        $post->status = "Active";
+        $post->save();
+        return redirect('mypost');
     }
 
     /**

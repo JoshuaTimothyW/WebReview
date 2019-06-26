@@ -7,18 +7,18 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav nav-tabs mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="home"><strong>Home</strong><span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href=" {{url('home')}} "><strong>Home</strong><span class="sr-only">(current)</span></a>
                 </li>
             @if (!session()->has('hasLogin'))
                 <li class="nav-item active">
-                    <a class="nav-link" href="login"><strong>Login</strong><span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href=" {{url('login')}} "><strong>Login</strong><span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="register"><strong>Register</strong><span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href=" {{url('register')}} "><strong>Register</strong><span class="sr-only">(current)</span></a>
                 </li>
             @else
                 <li class="nav-item active">
-                    <a class="nav-link" href="mypost"><strong>My Post</strong></a>
+                    <a class="nav-link" href=" {{url('mypost')}} "><strong>My Post</strong></a>
                 </li>
             @endif   
         </ul>
@@ -30,9 +30,9 @@
                             <img src="{{session()->get('member')->img}}" height=50px width=50px alt="profile-picture" class="rounded-circle">
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="profile">Profile</a>
+                            <a class="dropdown-item" href="{{url('profile')}}">Profile</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="logout">Logout</a>
+                            <a class="dropdown-item" href="{{url('logout')}}">Logout</a>
                         </div>
                 </li>
             </ul>

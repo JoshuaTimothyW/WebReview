@@ -4,24 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>My Post</title>
+    <title>Add Post</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://cdn.ckeditor.com/4.11.4/standard/ckeditor.js"></script>
 </head>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <body>
     @include('comp/navbar')
-    <br><br>
-    <div class="row">
-        <div class="col-md-4"></div>
-        <div class="col-md-4">
-            <a href=" {{url('postadd')}} ">
-                <div class="alert alert-info text-center">
-                        Create Post Here             
-                </div>
-            </a>
-            @include('comp/post-home')
-        </div>
-        <div class="col-md-4"></div>  
-    </div>  
+    <form action="postadd/submit" method="POST">
+        {{ csrf_field() }}
+        <input type="text" name="title" placeholder="Input Title" autocomplete="off">
+        <textarea name="editor1"></textarea>
+        <input type="submit" value="Post">
+    </form>
+    
+    <script>
+        CKEDITOR.replace('editor1');
+    </script>
 </body>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
