@@ -18,6 +18,9 @@
                         Create Post Here             
                 </div>
             </a>
+            <div class="alert alert-info text-center">
+                    Total Post : {{ $count }}
+            </div>
             @include('comp/post-home')
         </div>
         <div class="col-md-4"></div>  

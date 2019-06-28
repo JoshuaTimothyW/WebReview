@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 use App\Member;
 
 class PostController extends Controller
 {
+
+
     /**
      * Display a listing of the resource.
      *
@@ -22,7 +25,7 @@ class PostController extends Controller
             $post = Post::where('status','ACTIVE')->get();
         }
 
-        return view('home',['post'=>$post]);
+        return view('new_home',['post'=>$post]);
     }
 
     /**
@@ -44,13 +47,14 @@ class PostController extends Controller
      */
     function mypost(){
 
-        if (Post::where('status','ACTIVE')->count() < 1) {
+        if (Post::where('user_id',session()->get('member')->id)->count() < 1) {
             $post = "No Post";
-        } else {
+        } else {            
             $post = Post::where('user_id',session()->get('member')->id)->get();
         }
         
-        return view('mypost',['post'=>$post]);
+        $post_count = Post::where('user_id',session()->get('member')->id)->count();
+        return view('mypost',['post'=>$post,'count'=>$post_count]);
     }
 
     /**

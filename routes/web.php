@@ -12,7 +12,9 @@ use Illuminate\Support\Facades\Request;
 |
 */
 
-Route::get('/','Main@testdd');
+Route::get('/',function(){
+    return redirect('home');
+});
 
 Route::get('/json', function () {
     return response()->json(['name'=>'Hello World','state'=>'Gujarat']);

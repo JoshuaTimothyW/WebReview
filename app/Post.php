@@ -17,4 +17,10 @@ class Post extends Model
     function threads(){
         return $this->hasMany('App\Thread');
     }
+
+    function getCreateAtAttribute()
+    {
+        return \Carbon\Carbon::parse($this->attributes['create_at'])
+        ->format('d, M Y H:i');
+    }
 }

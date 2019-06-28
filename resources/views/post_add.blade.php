@@ -9,7 +9,7 @@
     <script src="https://cdn.ckeditor.com/4.11.4/standard/ckeditor.js"></script>
 </head>
 <body>
-    @include('comp/navbar')
+    @include('comp/navbar1')
     <form action="postadd/submit" method="POST">
         {{ csrf_field() }}
         <input type="text" name="title" placeholder="Input Title" autocomplete="off">

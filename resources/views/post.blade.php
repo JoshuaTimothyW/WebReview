@@ -12,16 +12,18 @@
     {{-- <br>
     <h1>  {{$post->title}} </h1>
     <br> --}}
-        <div class="card">
+        <div class="card m-3">
             <div class="card-header">
-                {{ $post->members->name }} Created At {{ $post->create_at }}
-                <h5><strong>{{$post->title}}</strong></h5>
+                    <img class="rounded-circle m-2" src=" {{ $post->members->img }} " alt="pp" height="50px" width="50px">
+                    <div class="btn-group-vertical">
+                        <strong class="text-primary">{{ $post->members->name }}</strong> 
+                        {{ $post->create_at }}
+                    </div>
             </div>
             <div class="card-body border">
-                
                 <div class="card-text">
-                    <p align="justify">
-                        {{$post->description}}
+                    <p align="justify" id="comment">
+                            {{ $post->description }}
                     </p>
                 </div>
             </div>
