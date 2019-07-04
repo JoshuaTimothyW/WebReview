@@ -67,8 +67,9 @@ class PostController extends Controller
     {
         $post = new Post();
         $post->title = $request->title;
-        $post->description = $request->editor1;
+        $post->description = $request->ckeditor;
         $post->user_id = session()->get('member')->id;
+        $post->img = '';
         $post->status = "Active";
         $post->save();
         return redirect('mypost');

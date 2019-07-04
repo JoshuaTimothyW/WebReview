@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Filesystem\Filesystem;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+use JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
 
 
 use App\Member;
@@ -15,11 +17,6 @@ use App\Post;
 
 class Main extends Controller
 {
-
-    
-
-    
-
     public function testdd() {
         // return Storage::putFile(
         //            storage_path('uploads'),
@@ -31,10 +28,11 @@ class Main extends Controller
         // $member = Member::where('email','sad@gmail.com')->get();
         // return dd($val);
 
-        // $user = Member::where('email','sad@gmail.com')->get();
-        // return view('vueee',['user'=>$user]);
-        $post = Post::all();
-        return dd($post);
+        $arr = Member::find(1)->post;
+        return response()->json(['user'=>$arr]);
+        // $post = Member::find(1)->post;
+        // $arr = [$post,$user];
+        // return view('vueee',['data'=>$arr]);
 
         // $arr = ['public/default.jpeg',Storage::exists(public_path().'\\pic\\default.jpeg'),Storage::exists('public/default.jpeg')];                
         // return dd($arr);
@@ -44,7 +42,8 @@ class Main extends Controller
 
         $validator = Validator::make($request->all(), [
             'email' => 'required|email|unique:members,email',
-            'username' => 'required|min:3|max:25',
+            'username' => 'required|unique:members,name|min:3|max:25',
+            'password' => 'required|min:6',
         ]);
 
         if ($validator->fails()) {
@@ -57,34 +56,66 @@ class Main extends Controller
         
         $member->email = $request->email;
         $member->name = $request->username;
+        $member->password = bcrypt($request->password);
         $member->role = "Member";
         $member->img = "upload/avatar/default.png";
-
         $member->save();
-        
-        $request->session()->put('member',$member);
-        $request->session()->put('hasLogin',true);
+
+        $user = User::create([
+            'name' => $request->get('username'),
+            'email' => $request->get('email'),
+            'password' => Hash::make($request->get('password')),
+            'role' => "Member",
+            'img' => "upload/avatar/default.png",
+        ]);
         
         if(!Storage::exists('upload/avatar/'.$member->id)){
             Storage::makeDirectory('upload/avatar/'.$member->id);
         }
-        return redirect('home');
+
+        $token = JWTAuth::fromUser($user);
+        return response()->json(compact('user','token'),201);
+        // return redirect('home');
     }
 
     function login_account(Request $request){
-        
-        $member = Member::where('email',$request->email)->first();
-        
-        if($member){
-            // $request->session()->put('id',$member->id);               
-            $request->session()->put('member',$member);         
-            $request->session()->put('hasLogin',true);
-            return redirect('home');
-        }else{
-            return redirect('login')->withErrors("Email or Username not exist");
+        $credentials = $request->only('email', 'password');
+
+        try {
+            if (! $token = JWTAuth::attempt($credentials)) {
+                return response()->json(['error' => 'invalid_credentials'], 400);
+            }
+        }catch (JWTException $e) {
+            return response()->json(['error' => 'could_not_create_token'], 500);
         }
         
-        return redirect('login');        
+        return response()->json(compact('token'));
+
+        // $member = Member::where('email',$request->user)->first();
+        
+        // if($member){
+        //     if (Hash::check($request->password, $member->password)) {
+        //         $request->session()->put('member',$member);         
+        //         $request->session()->put('hasLogin',true);
+        //         return redirect('home');
+        //     } else {
+        //         return redirect('login')->withErrors("Email or Password incorrect");
+        //     }
+        // }else{
+        //     return redirect('login')->withErrors("Email or Password incorrect");
+        // }
+        
+        // return redirect('login');        
+    }
+
+    public function token($token){
+        $user = JWTAuth::parseToken()->authenticate($token);
+        return response()->json($user);
+    }
+
+    function profile($name){
+        $member = Member::where('name',$name)->first();
+        return view('profile',['member'=>$member]);
     }
 
     function profile_edit(Request $request){

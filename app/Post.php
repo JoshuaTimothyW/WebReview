@@ -14,13 +14,13 @@ class Post extends Model
         return $this->belongsTo(Member::class,'user_id');
     }
 
-    function threads(){
-        return $this->hasMany('App\Thread');
+    function comment(){
+        return $this->hasMany('App\Comment');
     }
 
     function getCreateAtAttribute()
     {
-        return \Carbon\Carbon::parse($this->attributes['create_at'])
+        return \Carbon\Carbon::parse($this->attributes['created_at'])
         ->format('d, M Y H:i');
     }
 }

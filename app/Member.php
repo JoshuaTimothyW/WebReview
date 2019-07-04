@@ -2,19 +2,34 @@
 
 namespace App;
 
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
+use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Member extends Model
+class Member extends Authenticatable implements JWTSubject
 {
+    use Notifiable;
+    
     protected $table = 'members';
-
+    protected $hidden = ['password'];
     public $timestamps = false;
 
-    function forums(){
-    	return $this->hasMany('App\Forum');
+    function post(){
+    	return $this->hasMany('App\Post','id');
     }
     
-    function threads(){
-        return $this->hasMany('App\Thread');
+    function comment(){
+        return $this->hasMany('App\Comment');
+    }
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+    
+    public function getJWTCustomClaims()
+    {
+        return [];
     }
 }

@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class MyAuth
+class MyAuthMiddleware
 {
     /**
      * Handle an incoming request.
@@ -15,9 +15,18 @@ class MyAuth
      */
     public function handle($request, Closure $next)
     {
-        if($request->session()->has('hasLogin')){
-            return $next($request);
+        try {
+            $user = JWTAuth::parseToken()->authenticate();
+        } catch (Exception $e) {
+            if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException){
+                return response()->json(['status' => 'Token is Invalid']);
+            }else if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException){
+                return response()->json(['status' => 'Token is Expired']);
+            }else{
+                return response()->json(['status' => 'Authorization Token not found']);
+            }
         }
-        return redirect('login');
+
+        return $next($request);
     }
 }

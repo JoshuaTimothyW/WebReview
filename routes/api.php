@@ -13,6 +13,21 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+Route::get('register', function () {
+    return view('form',['status'=>'register']);
+});
+Route::get('login', function () {
+    return view('form',['status'=>'login']);
+});
+
+Route::post('register/submit','Main@register_account');
+Route::post('login/submit','Main@login_account');
+Route::get('profile/{token}','Main@token');
+
+Route::group(['middleware' => ['jwt.verify']], function() {
+    Route::get('user', 'Main@getAuthenticatedUser');
 });

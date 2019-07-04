@@ -7,6 +7,7 @@
     <title>Login</title>
 </head>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
 
 <body>
@@ -14,29 +15,32 @@
         <br><br><br>
         <div class="row">
             <div class="col-md-4"></div>
-            <div class="col-md-4">
-                <h1 class="text-center">Login Account</h1>
+            <div class="col-md-4 border text-center p-md-3 bg-light">
+                <h2 class="text-center text-primary">Login Account</h2>
                 <br><br>
-                    <form action="/login/submit" enctype="multipart/form-data" method="POST">
+                    <form action="/api/login/submit" class="text-center" enctype="multipart/form-data" method="POST">
                         {{ csrf_field() }}
+
                             <div class="form-group row">
-                              <label for="lblEmail" class="col-sm-2">Email</label>
-                              <div class="col-sm-10">
-                                    <input type="email" class="form-control" id="lblEmail" name="email" autocomplete="off">
-                                    <small class="text-muted">A current valid email address</small>
+                                <label for="lblEmail" class="col-sm-2 font-weight-bold text-primary">Email</label>
+                              <div class="col-sm-10">                                    
+                                    <input type="text" id="lblEmail" class="form-control" name="email" autocomplete="off">                                    
                               </div>
                             </div>
                             <div class="form-group row">
-                              <label for="lblName" class="col-sm-2">Username</label>
+                                <label for="lblPass" class="col-sm-2 font-weight-bold text-primary">Password</label>
                               <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="lblName" name="username" minlength="3" maxlength="25" autocomplete="off">
-                                    <small class="text-muted">Between 3 and 25 characters</small>
+                                    <input type="password" id="lblPass" class="form-control" name="password" minlength="6" autocomplete="off">
                               </div>
                             </div>
                             @include('comp/errormsg')
-                            <br><br>
+                            <br>
                             <button type="submit" class="btn btn-primary">Login</button>
                     </form>
+                    <br>
+                    <a href="{{ url('register') }}">
+                        Don't have an account? Register here
+                    </a>
             </div>
             <div class="col-md-4">
             </div>

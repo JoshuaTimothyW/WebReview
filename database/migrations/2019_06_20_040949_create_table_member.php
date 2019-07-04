@@ -17,9 +17,11 @@ class CreateTableMember extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('email');
+            $table->string('password');            
             $table->string('img')->default('upload/avatar/default.png');
             $table->enum('role',['Member', 'Moderator', 'Admin']);
             $table->enum('status',['Active','Banned']);
+            $table->date('last_activity');
             $table->timestamp('created_at');
         });
     }

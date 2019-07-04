@@ -14,21 +14,42 @@
     @include('comp/navbar')
     
     <div class="container-fluid">
-            <div class="col-md-10 col-md-offset-1v row">
-                    <div class="btn-group-vertical">
-                        <img src="{{ session()->get('member')->img }}" style="width:150px; height:150px; float:left; border-radius:50%; margin-right:25px;">
-                        <a href="/profile/reset" class="justify-content-center">Reset</a>
-                    </div> 
-                    <div class="btn-group-vertical">
-                        <h2>{{ session()->get('member')->name }}'s Profile</h2>
-                        <label>Update Profile Image</label>
-                        <form enctype="multipart/form-data" action="/profile/submit" method="POST">
-                            <input type="file" name="avatar">                        
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                            <button type="submit" class="pull-right btn btn-sm btn-primary">Update Profile</button>
-                        </form>
-                    </div>                       
+            <div class="card">
+                <div class="card-body m-3 text-center">
+                        <div class="btn-group-vertical">
+                            <img src="{{ $member->img }}" style="width:150px; height:150px; float:left; border-radius:50%; margin-right:25px;">
+                            <br>
+                        @if (session()->get('member')->email == $member->email)
+                                <a href="/profile/reset" class="ml-5">Reset</a>                          
+                        </div> 
+                        
+                            <div class="btn-group-vertical">
+                                <h2 class="text-primary">{{ $member->name }}'s Profile</h2>
+                                
+                                <label>Update Profile Image</label>
+                                <form enctype="multipart/form-data" action="/profile/submit" method="POST">
+                                    <input type="file" name="avatar">                        
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                    <button type="submit" class="pull-right btn btn-sm btn-primary">Update Profile</button>
+                                </form>
+                            </div>
+                        @else
+                         <h2 class="text-primary text-center">{{ $member->name }}</h2>
+                        @endif                        
+                </div>                       
             </div>
+            <br>
+            @if( $member->role != 'Admin')
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+                            
+                    </div>                
+                </div>
+            @endif
+           
+            <h5>
+                {{ session()->get('member')->role }}
+            </h5>
     </div>
 
     @include('comp/errormsg')

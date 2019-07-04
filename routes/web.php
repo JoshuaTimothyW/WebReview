@@ -16,10 +16,9 @@ Route::get('/',function(){
     return redirect('home');
 });
 
-Route::get('/json', function () {
-    return response()->json(['name'=>'Hello World','state'=>'Gujarat']);
-    // var_dump($_POST);
-});
+Route::get('/json','Main@testdd');
+   // return response()->json(['name'=>'Hello World','state'=>'Gujarat']);
+ 
 
 Route::get('/register', function () {
     return view('register');
@@ -31,16 +30,14 @@ Route::get('/login', function () {
 
 Route::get('/home','PostController@index_post');
 
-Route::post('/post','PostController@post');
+Route::get('/{name}','Main@profile');
 
 Route::post('/register/submit','Main@register_account');
 Route::post('/login/submit','Main@login_account');
 
-// Route::middleware('MyAuth')->group(function () {
+Route::middleware('mymiddleware')->group(function () {
     Route::get('/logout','Main@logout'); 
-    Route::get('/profile',function(){
-        return view('profile');
-    }); 
+    Route::get('/profile','Main@profile'); 
     Route::post('/profile/submit','Main@profile_edit');
     Route::get('/profile/reset','Main@reset');
     Route::get('/mypost','PostController@mypost');
@@ -48,4 +45,4 @@ Route::post('/login/submit','Main@login_account');
         return view('post_add');
     });
     Route::post('/postadd/submit','PostController@create');
-// });
+});

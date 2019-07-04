@@ -1,45 +1,39 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Laravel</a>
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+    <a class="navbar-brand" href=" {{url('home')}} ">IndoVapers.net</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
+        <span class="navbar-toggler-icon"></span>
     </button>
-
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav nav-tabs mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href=" {{url('home')}} "><strong>Home</strong><span class="sr-only">(current)</span></a>
+        <ul class="navbar-nav nav-tabs">
+                <li class="nav-item active col-md-3">                    
+                    <a class="nav-link" href=" {{url('home')}} "><i class="fas fa-home"><strong>Home</strong></i><span class="sr-only">(current)</span></a>
                 </li>
-            @if (!session()->has('hasLogin'))
-                <li class="nav-item active">
-                    <a class="nav-link" href=" {{url('login')}} "><strong>Login</strong><span class="sr-only">(current)</span></a>
+                <li class="nav-item active col-md-3">
+                    <a class="nav-link" href="#"><strong>Terbaik</strong></a>
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href=" {{url('register')}} "><strong>Register</strong><span class="sr-only">(current)</span></a>
+                <li class="nav-item active dropdown col-md-3">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" href="#"><strong>Diskusi</strong></a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Review</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Pod</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">E Liquid</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Mod</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Atomizer</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Vape Terbaik</a>
+                    </div>
                 </li>
-            @else
-                <li class="nav-item active">
-                    <a class="nav-link" href=" {{url('mypost')}} "><strong>My Post</strong></a>
-                </li>
-            @endif   
+                <li class="nav-item active col-md-3">
+                    <a class="nav-link" href="#"><strong>Tutorial</strong></a>
+                </li>                    
         </ul>
-       @if (session()->has('hasLogin'))     
-            <ul class="nav justify-content-end">
-                            {{-- <img src="{{ \Illuminate\Support\Facades\Storage::url('app/'.session()->get('member')->img) }}" alt="Image">     --}}                          
-                <li class="nav-item dropdown">                        
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">                                
-                            <img src="{{session()->get('member')->img}}" height=50px width=50px alt="profile-picture" class="rounded-circle">
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{url('profile')}}">Profile</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="{{url('logout')}}">Logout</a>
-                        </div>
-                </li>
-            </ul>
-        @endif
-    </div>
-    {{-- <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form> --}}
+        </div>
+    <form class="form-inline my-2 my-lg-0">
+        <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-primary" type="submit">Search</button>
+    </form>          
 </nav>

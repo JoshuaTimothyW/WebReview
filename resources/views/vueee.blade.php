@@ -19,10 +19,15 @@
 {{-- Resource itu kebalikannya --}}
 
 <body>
-    <img src="{{ \Illuminate\Support\Facades\Storage::url($user->img) }}" alt="image">
+    {{-- <img src="{{ \Illuminate\Support\Facades\Storage::url($user->img) }}" alt="image">
     <div id="app">
         <example-component></example-component>
-    </div>
+    </div> --}}
+
+    @foreach ($data[0] as $i)
+        {{ $i->title }}
+    @endforeach
+   
 </body>
 <script src="/js/test.js"></script>
 {{-- <script src="{{URL::asset('/js/app.js')}}"></script> --}}

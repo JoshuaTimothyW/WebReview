@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Thread extends Model
 {
-    protected $table = 'thread';
+    protected $table = 'comment';
 
     public $timestamps = false;
 

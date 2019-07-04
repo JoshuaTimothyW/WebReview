@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Carbon\Carbon;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,12 +16,25 @@ class DatabaseSeeder extends Seeder
         \App\Member::create([
             'name' => "test",
             'email' => "test@gmail.com",
+            'password' => bcrypt('123456'),
             'role' => 'Member',
+            'status' => 'Active',
+            'last_activity' => Carbon::parse('29-06-2019'),
+        ]);
+
+        \App\Member::create([
+            'name' => "Edward",
+            'email' => "edwardedditya17@gmail.com",
+            'password' => bcrypt('123456'),
+            'role' => 'Admin',
+            'status' => 'Active',
+            'last_activity' => Carbon::parse('29-06-2019'),
         ]);
         
         \App\Post::create([
             'user_id' => "1",
             'title' => "Ini Post pertama",
+            'category' => "apaaja",
             'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed veritatis, aut perferendis, voluptatem error modi blanditiis officiis, nisi expedita cum voluptas nostrum veniam quos fuga voluptate fugiat. At, iusto repudiandae.
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aliquid sunt fuga dolores temporibus rem saepe magni repellendus, soluta laudantium! Soluta quibusdam enim, debitis cum voluptatem dicta asperiores quae. Voluptates, tenetur.
             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Explicabo, amet necessitatibus? Quaerat ipsam incidunt minus. Temporibus aliquam atque doloremque expedita. Quidem, voluptatibus iure explicabo aspernatur maxime optio sunt eveniet error?
