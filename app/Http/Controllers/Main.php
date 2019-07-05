@@ -28,8 +28,16 @@ class Main extends Controller
         // $member = Member::where('email','sad@gmail.com')->get();
         // return dd($val);
 
-        $arr = Member::find(1)->post;
-        return response()->json(['user'=>$arr]);
+        // $member = Member::find(1)->post;
+
+        // Searching
+        // ###############################################################
+        $search = "lor";
+        
+        $member = Post::where('description','like',"%$search%")->get();
+        return response()->json($member);
+        // ###############################################################
+
         // $post = Member::find(1)->post;
         // $arr = [$post,$user];
         // return view('vueee',['data'=>$arr]);
@@ -59,22 +67,23 @@ class Main extends Controller
         $member->password = bcrypt($request->password);
         $member->role = "Member";
         $member->img = "upload/avatar/default.png";
+        $member->last_activity = Carbon::now();
         $member->save();
 
-        $user = User::create([
-            'name' => $request->get('username'),
-            'email' => $request->get('email'),
-            'password' => Hash::make($request->get('password')),
-            'role' => "Member",
-            'img' => "upload/avatar/default.png",
-        ]);
+        // $user = User::create([
+        //     'name' => $request->get('username'),
+        //     'email' => $request->get('email'),
+        //     'password' => Hash::make($request->get('password')),
+        //     'role' => "Member",
+        //     'img' => "upload/avatar/default.png",
+        // ]);
         
         if(!Storage::exists('upload/avatar/'.$member->id)){
             Storage::makeDirectory('upload/avatar/'.$member->id);
         }
 
-        $token = JWTAuth::fromUser($user);
-        return response()->json(compact('user','token'),201);
+        $token = JWTAuth::fromUser($member);
+        return response()->json(compact('member','token'));
         // return redirect('home');
     }
 
@@ -82,16 +91,19 @@ class Main extends Controller
         $credentials = $request->only('email', 'password');
 
         try {
-            if (! $token = JWTAuth::attempt($credentials)) {
-                return response()->json(['error' => 'invalid_credentials'], 400);
+            if (!$token = JWTAuth::attempt($credentials)) {
+                return response()->json(['error' => 'invalid_credentials']);
             }
         }catch (JWTException $e) {
-            return response()->json(['error' => 'could_not_create_token'], 500);
+            return response()->json(['error' => 'could_not_create_token']);
         }
-        
-        return response()->json(compact('token'));
 
-        // $member = Member::where('email',$request->user)->first();
+        $payload = JWTAuth::decode($token);
+        return dd($payload);
+        $member = JWTAuth::user();
+        return response()->json(compact('member','token'));
+        
+        // $member = Member::where('email',$request->email)->first();
         
         // if($member){
         //     if (Hash::check($request->password, $member->password)) {
@@ -104,8 +116,7 @@ class Main extends Controller
         // }else{
         //     return redirect('login')->withErrors("Email or Password incorrect");
         // }
-        
-        // return redirect('login');        
+        // return redirect('home',compact('token'));        
     }
 
     public function token($token){

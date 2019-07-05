@@ -46,15 +46,24 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     function mypost(){
-
-        if (Post::where('user_id',session()->get('member')->id)->count() < 1) {
+        
+        // if (Post::where('user_id',session()->get('member')->id)->count() < 1) {
+        //     $post = "No Post";
+        // } else {            
+        //     $post = Post::where('user_id',session()->get('member')->id)->get();
+        // }
+        
+        // $post_count = Post::where('user_id',session()->get('member')->id)->count();
+        // return view('mypost',['post'=>$post,'count'=>$post_count]);
+        
+        $member = JWTAuth::user();
+        if (Post::where('user_id',$member->id)->count() < 1) {
             $post = "No Post";
         } else {            
-            $post = Post::where('user_id',session()->get('member')->id)->get();
+            $post = Post::where('user_id',$member->id)->get();
         }
         
-        $post_count = Post::where('user_id',session()->get('member')->id)->count();
-        return view('mypost',['post'=>$post,'count'=>$post_count]);
+        return response()->json($post);
     }
 
     /**

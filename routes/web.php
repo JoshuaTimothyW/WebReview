@@ -36,8 +36,9 @@ Route::post('/register/submit','Main@register_account');
 Route::post('/login/submit','Main@login_account');
 
 Route::middleware('mymiddleware')->group(function () {
+    Route::get('profile/{token}','Main@token');
     Route::get('/logout','Main@logout'); 
-    Route::get('/profile','Main@profile'); 
+    Route::get('/profile/{token}','Main@profile'); 
     Route::post('/profile/submit','Main@profile_edit');
     Route::get('/profile/reset','Main@reset');
     Route::get('/mypost','PostController@mypost');
