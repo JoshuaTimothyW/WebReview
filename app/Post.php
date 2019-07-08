@@ -18,6 +18,10 @@ class Post extends Model
         return $this->hasMany('App\Comment');
     }
 
+    function tag(){
+        return $this->hasMany(Tag::class,'id');
+    }
+
     function getCreateAtAttribute()
     {
         return \Carbon\Carbon::parse($this->attributes['created_at'])

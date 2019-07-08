@@ -17,8 +17,6 @@ use Illuminate\Http\Request;
 //     return $request->user();
 // });
 
-Route::get('/','PostController@index_post');
-
 Route::get('register', function () {
     return view('register',['status'=>'register']);
 });
@@ -28,6 +26,7 @@ Route::get('login', function () {
 
 Route::post('register/submit','Main@register_account');
 Route::post('login/submit','Main@login_account');
+Route::get('/','PostController@index_post');
 
 Route::middleware("mymiddleware")->group(function() {
     Route::get('profile/{token}','Main@token');

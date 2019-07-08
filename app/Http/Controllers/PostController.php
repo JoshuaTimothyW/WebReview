@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Post;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
+use App\Post;
+use App\Tag;
 use App\Member;
+use App\Comment;
 
 class PostController extends Controller
 {
-
-
     /**
      * Display a listing of the resource.
      *
@@ -19,13 +19,21 @@ class PostController extends Controller
      */
     public function index_post(Request $request)
     {
-        if (Post::where('status','ACTIVE')->count() < 1) {
-            $post = "No Post";
-        } else {
-            $post = Post::where('status','ACTIVE')->get();
+        $post = Post::where('status','like','ACTIVE')->orderBy('created_at','desc');
+
+        if ($post->count() < 1) {
+            $arr = "No Post";
+        } else {            
+            $post = $post->get();
+            foreach($post as $i){
+                $i->members;
+                $i['tag'] = Tag::where('post_id',$i['id'])->get();
+                $i['comment'] = Comment::where('post_id',$i['id'])->get();
+            }
         }
 
-        return view('new_home',['post'=>$post]);
+        return response()->json($post);
+        // return view('new_home',compact('post'));
     }
 
     /**
@@ -33,10 +41,16 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function post(Request $request)
+    public function post($id)
     {
-        $post = Post::where('id',$request->id)->first();
-        return view('post',['post'=>$post]);
+        $post = Post::where('id',$id)->first();
+    
+        $post->members;
+        $post['tag'] = Tag::where('post_id',$i['id'])->get();
+        $post['comment'] = Comment::where('post_id',$i['id'])->get();
+
+        return response()->json($post);
+        // return view('post',compact('post'));
     }
 
     /**

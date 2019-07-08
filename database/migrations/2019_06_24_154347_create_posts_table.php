@@ -18,7 +18,6 @@ class CreatePostsTable extends Migration
             $table->integer('user_id');
             $table->string('title');
             $table->text('description');
-            $table->string('category');
             $table->string('img')->nullable();
             $table->integer('like')->default(0);
             $table->string('status');

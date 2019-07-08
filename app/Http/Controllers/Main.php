@@ -8,12 +8,13 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
-use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
-
-use App\Member;
+use JWTAuth;
 use App\Post;
+use App\Tag;
+use App\Member;
+use App\Comment;
 
 class Main extends Controller
 {
@@ -28,14 +29,19 @@ class Main extends Controller
         // $member = Member::where('email','sad@gmail.com')->get();
         // return dd($val);
 
-        // $member = Member::find(1)->post;
+        // $member = Post::find(1)->tag;
 
         // Searching
         // ###############################################################
         $search = "lor";
         
-        $member = Post::where('description','like',"%$search%")->get();
-        return response()->json($member);
+        $post = Post::where('description','like',"%$search%")->get();
+
+        // foreach($post as $i){
+        //     $i['tag'] = Post::find($i['id'])->tag;
+        // }
+
+        return response()->json($post);
         // ###############################################################
 
         // $post = Member::find(1)->post;
@@ -98,8 +104,8 @@ class Main extends Controller
             return response()->json(['error' => 'could_not_create_token']);
         }
 
-        $payload = JWTAuth::decode($token);
-        return dd($payload);
+        // $payload = JWTAuth::decode($token);
+        // return dd($payload);
         $member = JWTAuth::user();
         return response()->json(compact('member','token'));
         

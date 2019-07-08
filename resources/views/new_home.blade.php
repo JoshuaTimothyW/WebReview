@@ -81,22 +81,36 @@
                 </div>
         </div>
         <div class="col-md-4">
-            <button class="btn btn-info text-center" data-toggle="modal" data-target="#exampleModalCenter">
+            <button class="btn bg-light container-fluid" data-toggle="modal" data-target="#exampleModalCenter">
                 <div class="alert alert-info text-center">
                         Create Post Here             
                 </div>             
             </button>
-            <form action="postadd/submit" method="POST">
-                {{ csrf_field() }}
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="text-primary text-center mb-2"><strong>New Post</strong></h4>
-                        <input type="text" class="mb-2 container-fluid" autocomplete="false" name="title" placeholder="Title">
-                        <textarea name="ckeditor"></textarea>
+                            
+                <div class="modal" id="exampleModalCenter">
+                    <div class="modal-dialog modal-dialog-centered">                            
+                        <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title text-primary text-center mb-2">
+                                        <strong>New Post</strong>
+                                    </h5>  
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form action="postadd/submit" method="POST">    
+                                    {{ csrf_field() }}                            
+                                    <div class="modal-body">                                                      
+                                        <input type="text" class="mb-2 container-fluid" autocomplete="false" name="title" placeholder="Title">
+                                        <textarea name="ckeditor"></textarea>
+                                
+                                    </div>
+                                    <button type="submit" class="btn btn-primary container-fluid">Submit</button>
+                                </form>
+                        </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
-            </form>
+            
                 @include('comp/post-home')
         </div>
         <div class="col-md-4">
@@ -115,13 +129,17 @@
                             </div>
                         @else
                             <div class="text-center m-3">
-                                <a href=" {{url('login')}} ">
-                                    <button class="btn btn-lg btn-primary">Login</button>                                
-                                </a>
+                                <div class="border container-fluid p-2">
+                                        <a href=" {{url('login')}} ">
+                                            <button class="btn btn-lg btn-primary">Login</button>                                
+                                        </a>
+                                </div>
                                 <h5>Or</h5>
-                                <a href=" {{url('register')}} ">
-                                    <button class="btn btn-primary btn-lg">Register</button>
-                                </a>
+                                <div class="border container-fluid p-2">
+                                    <a href=" {{url('register')}} ">
+                                        <button class="btn btn-primary btn-lg">Register</button>
+                                    </a>
+                                </div>
                             </div>
                         @endif
                 </div>
