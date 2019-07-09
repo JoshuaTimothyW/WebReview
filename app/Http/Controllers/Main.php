@@ -25,9 +25,6 @@ class Main extends Controller
         // );
         // $path = Storage::exists('members/1');
         // $file = Storage::allFiles($path);
-        
-        // $member = Member::where('email','sad@gmail.com')->get();
-        // return dd($val);
 
         // $member = Post::find(1)->tag;
 
@@ -44,16 +41,11 @@ class Main extends Controller
         return response()->json($post);
         // ###############################################################
 
-        // $post = Member::find(1)->post;
-        // $arr = [$post,$user];
-        // return view('vueee',['data'=>$arr]);
-
-        // $arr = ['public/default.jpeg',Storage::exists(public_path().'\\pic\\default.jpeg'),Storage::exists('public/default.jpeg')];                
         // return dd($arr);
     }
 
     function register_account(Request $request){
-
+        // Validasi
         $validator = Validator::make($request->all(), [
             'email' => 'required|email|unique:members,email',
             'username' => 'required|unique:members,name|min:3|max:25',
@@ -66,6 +58,7 @@ class Main extends Controller
                         ->withInput();
         }
         
+        // Buat objek member baru untuk insert data
         $member = new Member();
         
         $member->email = $request->email;
@@ -75,20 +68,16 @@ class Main extends Controller
         $member->img = "upload/avatar/default.png";
         $member->last_activity = Carbon::now();
         $member->save();
-
-        // $user = User::create([
-        //     'name' => $request->get('username'),
-        //     'email' => $request->get('email'),
-        //     'password' => Hash::make($request->get('password')),
-        //     'role' => "Member",
-        //     'img' => "upload/avatar/default.png",
-        // ]);
         
+        // Buat folder profile picture baru kalo gaada
         if(!Storage::exists('upload/avatar/'.$member->id)){
             Storage::makeDirectory('upload/avatar/'.$member->id);
         }
 
+        // Generate Token
         $token = JWTAuth::fromUser($member);
+
+        # Return json (Member dan Token)
         return response()->json(compact('member','token'));
         // return redirect('home');
     }
@@ -104,30 +93,8 @@ class Main extends Controller
             return response()->json(['error' => 'could_not_create_token']);
         }
 
-        // $payload = JWTAuth::decode($token);
-        // return dd($payload);
         $member = JWTAuth::user();
-        return response()->json(compact('member','token'));
-        
-        // $member = Member::where('email',$request->email)->first();
-        
-        // if($member){
-        //     if (Hash::check($request->password, $member->password)) {
-        //         $request->session()->put('member',$member);         
-        //         $request->session()->put('hasLogin',true);
-        //         return redirect('home');
-        //     } else {
-        //         return redirect('login')->withErrors("Email or Password incorrect");
-        //     }
-        // }else{
-        //     return redirect('login')->withErrors("Email or Password incorrect");
-        // }
-        // return redirect('home',compact('token'));        
-    }
-
-    public function token($token){
-        $user = JWTAuth::parseToken()->authenticate($token);
-        return response()->json($user);
+        return response()->json(compact('member','token'));       
     }
 
     function profile($name){

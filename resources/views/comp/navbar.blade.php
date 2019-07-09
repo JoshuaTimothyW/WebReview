@@ -32,8 +32,8 @@
                 </li>                    
         </ul>
         </div>
-    <form class="form-inline my-2 my-lg-0">
-        <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+    <form class="form-inline my-2 my-lg-0"  method="GET" id="search-form" onsubmit="search()">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search" autocomplete="off">
         <button class="btn btn-outline-primary" type="submit">Search</button>
     </form>          
 </nav>

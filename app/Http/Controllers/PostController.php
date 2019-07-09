@@ -19,6 +19,7 @@ class PostController extends Controller
      */
     public function index_post(Request $request)
     {
+        // return dd(session()->get('token'));
         $post = Post::where('status','like','ACTIVE')->orderBy('created_at','desc');
 
         if ($post->count() < 1) {
@@ -32,8 +33,8 @@ class PostController extends Controller
             }
         }
 
-        return response()->json($post);
-        // return view('new_home',compact('post'));
+        // return response()->json($post);
+        return view('new_home',compact('post'));
     }
 
     /**
@@ -49,8 +50,8 @@ class PostController extends Controller
         $post['tag'] = Tag::where('post_id',$i['id'])->get();
         $post['comment'] = Comment::where('post_id',$i['id'])->get();
 
-        return response()->json($post);
-        // return view('post',compact('post'));
+        // return response()->json($post);
+        return view('post',compact('post'));
     }
 
     /**
@@ -60,16 +61,6 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     function mypost(){
-        
-        // if (Post::where('user_id',session()->get('member')->id)->count() < 1) {
-        //     $post = "No Post";
-        // } else {            
-        //     $post = Post::where('user_id',session()->get('member')->id)->get();
-        // }
-        
-        // $post_count = Post::where('user_id',session()->get('member')->id)->count();
-        // return view('mypost',['post'=>$post,'count'=>$post_count]);
-        
         $member = JWTAuth::user();
         if (Post::where('user_id',$member->id)->count() < 1) {
             $post = "No Post";
@@ -86,13 +77,14 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create(Request $request,$token)
     {
+        $member = JWTAuth::user();
+
         $post = new Post();
         $post->title = $request->title;
-        $post->description = $request->ckeditor;
-        $post->user_id = session()->get('member')->id;
-        $post->img = '';
+        $post->description = $request->description;
+        $post->user_id = $member->id;
         $post->status = "Active";
         $post->save();
         return redirect('mypost');

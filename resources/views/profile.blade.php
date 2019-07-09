@@ -17,12 +17,11 @@
             <div class="card">
                 <div class="card-body m-3 text-center">
                         <div class="btn-group-vertical">
-                            <img src="{{ $member->img }}" style="width:150px; height:150px; float:left; border-radius:50%; margin-right:25px;">
-                            <br>
-                        @if (session()->get('member')->email == $member->email)
+                            <img class="border mb-5" src="{{ $member->img }}" style="width:150px; height:150px; float:left; border-radius:50%; margin-right:25px;">
+                            <div class="text-primary text-center h1">{{ $member->name }}</div>
+                            {{--                         
                                 <a href="/profile/reset" class="ml-5">Reset</a>                          
                         </div> 
-                        
                             <div class="btn-group-vertical">
                                 <h2 class="text-primary">{{ $member->name }}'s Profile</h2>
                                 
@@ -32,10 +31,9 @@
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                     <button type="submit" class="pull-right btn btn-sm btn-primary">Update Profile</button>
                                 </form>
-                            </div>
-                        @else
-                         <h2 class="text-primary text-center">{{ $member->name }}</h2>
-                        @endif                        
+                            </div> --}}
+                            
+                        </div>
                 </div>                       
             </div>
             <br>
@@ -47,9 +45,11 @@
                 </div>
             @endif
            
-            <h5>
-                {{ session()->get('member')->role }}
-            </h5>
+            <h4 class="text-center text-primary mt-3">
+                <strong>
+                    {{ $member->role }}
+                </strong>
+            </h4>
     </div>
 
     @include('comp/errormsg')

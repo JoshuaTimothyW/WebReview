@@ -34,8 +34,6 @@ Route::middleware("mymiddleware")->group(function() {
     Route::post('profile/submit','Main@profile_edit');
     Route::get('profile/reset','Main@reset');
     Route::get('mypost','PostController@mypost');
-    Route::get('postadd',function(){
-        return view('post_add');
-    });
-    Route::post('postadd/submit','PostController@create');
+    // Route::get('comment/submit','CommentController@comment_add');
+    Route::post('postadd/submit/{token}','PostController@create');
 });

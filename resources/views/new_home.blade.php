@@ -83,12 +83,12 @@
         <div class="col-md-4">
             <button class="btn bg-light container-fluid" data-toggle="modal" data-target="#exampleModalCenter">
                 <div class="alert alert-info text-center">
-                        Create Post Here             
+                        Create Post Here       
                 </div>             
             </button>
                             
                 <div class="modal" id="exampleModalCenter">
-                    <div class="modal-dialog modal-dialog-centered">                            
+                    <div class="modal-dialog">                            
                         <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title text-primary text-center mb-2">
@@ -101,7 +101,7 @@
                                 <form action="postadd/submit" method="POST">    
                                     {{ csrf_field() }}                            
                                     <div class="modal-body">                                                      
-                                        <input type="text" class="mb-2 container-fluid" autocomplete="false" name="title" placeholder="Title">
+                                        <input type="text" class="mb-2 container-fluid" autocomplete="off" name="title" placeholder="Title">
                                         <textarea name="ckeditor"></textarea>
                                 
                                     </div>
@@ -115,33 +115,34 @@
         </div>
         <div class="col-md-4">
                 <div class="card border mb-2">
-                        @if (session()->has('hasLogin'))
-                            <div class="text-center m-3">
-                                    <a href=" {{ url(session()->get('member')->name) }} ">
-                                        <img src="{{ session()->get('member')->img }}" height=50px width=50px alt="profile-picture" class="rounded-circle">
-                                        <h5 class="text-primary"><strong> {{ session()->get('member')->name }} </strong></h5>
-                                    </a>  
-                                    <h5 class="text-muted"> {{ session()->get('member')->role }} </h5>
-                                    <br><br>
-                                    <a href=" {{url('logout')}} ">
-                                        <button class="btn btn-primary btn-md">Logout</button>
-                                    </a>
-                            </div>
-                        @else
-                            <div class="text-center m-3">
-                                <div class="border container-fluid p-2">
-                                        <a href=" {{url('login')}} ">
-                                            <button class="btn btn-lg btn-primary">Login</button>                                
-                                        </a>
-                                </div>
-                                <h5>Or</h5>
-                                <div class="border container-fluid p-2">
-                                    <a href=" {{url('register')}} ">
-                                        <button class="btn btn-primary btn-lg">Register</button>
-                                    </a>
-                                </div>
-                            </div>
-                        @endif
+                    {{-- @if ($token)
+                        <div class="text-center m-3">
+                                <a href=" {{ url($member->name) }} ">
+                                    <img src="{{ $member->img }}" height=50px width=50px alt="profile-picture" class="rounded-circle">
+                                    <h5 class="text-primary"><strong> {{ $member->name }} </strong></h5>
+                                </a>  
+                                <h5 class="text-muted"> {{ $member->role }} </h5>
+                                <br><br>
+                                <a href=" {{url('logout')}} ">
+                                    <button class="btn btn-primary btn-md">Logout</button>
+                                </a>
+                        </div>
+                    @else
+                       
+                    @endif --}}
+                    <div class="text-center m-3">
+                        <div class="border container-fluid p-2">
+                                <a href=" {{url('login')}} ">
+                                    <button class="btn btn-lg btn-primary">Login</button>                                
+                                </a>
+                        </div>
+                        <h5>Or</h5>
+                        <div class="border container-fluid p-2">
+                            <a href=" {{url('register')}} ">
+                                <button class="btn btn-primary btn-lg">Register</button>
+                            </a>
+                        </div>
+                    </div>
                 </div>
                 <div class="card border">
                         <img src="https://a1.vaping360.com/wp-content/uploads/2019/06/v-folk-800x533-25-of-25-356x220.jpg?auto=compress,format" alt="">
