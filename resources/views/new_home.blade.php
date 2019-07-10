@@ -98,12 +98,10 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <form action="postadd/submit" method="POST">    
+                                <form action="/postadd/submit" method="POST">    
                                     {{ csrf_field() }}                            
                                     <div class="modal-body">                                                      
-                                        <input type="text" class="mb-2 container-fluid" autocomplete="off" name="title" placeholder="Title">
-                                        <textarea name="ckeditor"></textarea>
-                                
+                                        <textarea name="content" class="container-fluid"></textarea>
                                     </div>
                                     <button type="submit" class="btn btn-primary container-fluid">Submit</button>
                                 </form>
@@ -112,6 +110,7 @@
                 </div>
             
                 @include('comp/post-home')
+                
         </div>
         <div class="col-md-4">
                 <div class="card border mb-2">

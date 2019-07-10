@@ -24,16 +24,25 @@ Route::get('login', function () {
     return view('login',['status'=>'login']);
 });
 
+Route::get('/','PostController@index_post');
 Route::post('register/submit','Main@register_account');
 Route::post('login/submit','Main@login_account');
-Route::get('/','PostController@index_post');
+
+Route::get('home','Main@testdd');
 
 Route::middleware("mymiddleware")->group(function() {
-    Route::get('profile/{token}','Main@token');
-    Route::get('logout','Main@logout'); 
-    Route::post('profile/submit','Main@profile_edit');
-    Route::get('profile/reset','Main@reset');
-    Route::get('mypost','PostController@mypost');
-    // Route::get('comment/submit','CommentController@comment_add');
+    // User
+    Route::get('profile/{token}','Main@profile');
+    Route::get('logout/{token}','Main@logout');
+    // Route::post('profile/submit','Main@profile_edit');
+    // Route::get('profile/reset','Main@reset');
+    
+
+    // Post
+    Route::get('/{token}','PostController@index_post');
+    Route::get('mypost/{token}','PostController@mypost');
     Route::post('postadd/submit/{token}','PostController@create');
+    
+    // Comment
+    // Route::post('commentadd/submit/{token}','CommentController@comment_add');
 });

@@ -18,6 +18,7 @@ use App\Comment;
 
 class Main extends Controller
 {
+    // Buat Test Aja
     public function testdd() {
         // return Storage::putFile(
         //            storage_path('uploads'),
@@ -32,7 +33,9 @@ class Main extends Controller
         // ###############################################################
         $search = "lor";
         
-        $post = Post::where('description','like',"%$search%")->get();
+        // $post = Post::where('description','like',"%$search%")->get();
+
+        $post = Post::paginate(2);
 
         // foreach($post as $i){
         //     $i['tag'] = Post::find($i['id'])->tag;
@@ -41,11 +44,13 @@ class Main extends Controller
         return response()->json($post);
         // ###############################################################
 
-        // return dd($arr);
+        // return view('new_home',compact('post'));
     }
 
+
+    // Register Function
     function register_account(Request $request){
-        // Validasi
+        // Validasi Input
         $validator = Validator::make($request->all(), [
             'email' => 'required|email|unique:members,email',
             'username' => 'required|unique:members,name|min:3|max:25',
@@ -76,32 +81,46 @@ class Main extends Controller
 
         // Generate Token
         $token = JWTAuth::fromUser($member);
-
-        # Return json (Member dan Token)
+        
+        // Return json (Member dan Token)
         return response()->json(compact('member','token'));
         // return redirect('home');
+        
     }
 
+
+    // Login Function
     function login_account(Request $request){
+        // Get email dan password
         $credentials = $request->only('email', 'password');
 
+        // Verifikasi token dengan user di db
         try {
+            # Data ada, tapi token salah
             if (!$token = JWTAuth::attempt($credentials)) {
                 return response()->json(['error' => 'invalid_credentials']);
             }
         }catch (JWTException $e) {
+            # Fail to generate token
             return response()->json(['error' => 'could_not_create_token']);
         }
 
+        // Data member dr verifikasi token
         $member = JWTAuth::user();
+        
         return response()->json(compact('member','token'));       
     }
 
-    function profile($name){
-        $member = Member::where('name',$name)->first();
-        return view('profile',['member'=>$member]);
+
+    // Get Profile Function
+    function profile($token){
+        // Get member data dari token
+        $member = auth()->user();
+        return response()->json($member);
     }
 
+
+    // Lagi Fix
     function profile_edit(Request $request){
 
         $validator = Validator::make($request->all(), [
@@ -132,6 +151,8 @@ class Main extends Controller
         return redirect('profile');
     }
 
+
+    // Lagi Fix
     function reset(Request $request){
         $member = Member::find(session()->get('member')->id);
         
@@ -145,10 +166,13 @@ class Main extends Controller
         return redirect('profile');
     }
 
-    function logout(Request $request){
-        $request->session()->flush();
+
+    // Fungsi Logout
+    function logout(){
+        // Forget the token and back to home
+        auth()->logout();
+        return response()->json("Logout Successful");
         return redirect('home');
     }
-
 }
 

@@ -9,8 +9,4 @@ use App\Comment;
 
 class CommentController extends Controller
 {
-    function index(){
-        $comment = Comment::all();
-        
-    }
 }

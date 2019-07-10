@@ -19,17 +19,23 @@ class MyAuthMiddleware
     public function handle($request, Closure $next)
     {
         try {
-            $user = JWTAuth::parseToken()->authenticate();
+            // Cari data user lewat token
+            $member = JWTAuth::parseToken()->authenticate();
         } catch (Exception $e) {
             if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException){
+                # Data ada, tapi token salah
                 return response()->json(['status' => 'Token is Invalid']);
             }else if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException){
-                return response()->json(['status' => 'Token is Expired']);
+                # Masa Token habis/expired
+                $newtoken = auth()->refresh();
+                return response()->json(['status' => 'Token is Expired','new_token' => $newtoken]);
             }else{
+                # Tidak Ada Token
                 return response()->json(['status' => 'Authorization Token not found']);
             }
         }
 
+        // Kalo exist, terusin
         return $next($request);
     }
 }

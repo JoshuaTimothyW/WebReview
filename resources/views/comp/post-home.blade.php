@@ -17,19 +17,15 @@
                                     </a> 
                                     {{ $item->create_at }}
                                 </div>
-                                @if ($item->img != '')
-                                    <img class="card-img-top border-bottom" src=" {{ $item->img }} " alt="Image" height="200px">
-                                @endif
                         </div>                        
                         <div class="card-body" data-toggle="modal" data-target=" {{'#postmodal'.$item->id}} ">
-                            <h5 class="card-title"> {{ $item->title }} </h5>
+                                {{ $item->id }}
                         </div>               
                         {{-- <input type="hidden" name="id" value="{{ $item->id }}"> --}}
                         <div class="btn-group">
                                 <a href="" class="btn bg-light border">
                                     <button data-toggle="popover" data-placement="bottom" data-content="Like">
                                         <i class="far fa-thumbs-up"></i>
-                                        {{ $item->like }}
                                     </button>
                                 </a>
                                 <a class="btn bg-light border" data-toggle="modal" data-target=" {{'#postmodal'.$item->id}} ">
@@ -58,16 +54,13 @@
                                 </div>                                                            
                                 <div class="modal-body">
                                     <h5 class="modal-title container-fluid"> {{ $item->title }} </h5>                                                      
-                                    @if ($item->img != '')
-                                        <img class="card-img-top border-bottom" src=" {{ $item->img }} " alt="Image" height="200px">
-                                    @endif
                                     <div class="container-fluid">
                                         <p>
                                             @foreach ($item['tag'] as $tag)
                                                 #{{$tag->name}}
                                                 <br>
                                             @endforeach
-                                            {{ $item->description }}
+                                            {{ $item->content }}
                                         </p>
                                     </div>
                                     <div class="card">

@@ -18,8 +18,6 @@ class CreateTableComment extends Migration
             $table->integer('user_id');
             $table->integer('post_id');            
             $table->text('content');
-            $table->string('img')->nullable();
-            $table->integer('like')->default(0);
             $table->timestamp('created_at');
         });
     }
