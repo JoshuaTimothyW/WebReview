@@ -42,6 +42,7 @@ class DatabaseSeeder extends Seeder
             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sapiente sit asperiores laborum voluptates ipsam amet mollitia ad tenetur, voluptatem nulla, accusantium architecto ex obcaecati ullam nihil illo. Sed, accusantium veritatis?
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum corrupti unde ad. Minima in debitis recusandae error. Ipsa a aut, pariatur similique totam cum blanditiis, nulla sint sed, soluta quisquam?
             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minima sapiente eaque amet mollitia incidunt labore blanditiis quasi corrupti quam exercitationem sequi id repudiandae ducimus vitae veritatis, sed consequuntur, ut architecto?',
+            'category' => 'review',
             'status' => 'ACTIVE',
         ]);
 
@@ -56,6 +57,7 @@ class DatabaseSeeder extends Seeder
             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sapiente sit asperiores laborum voluptates ipsam amet mollitia ad tenetur, voluptatem nulla, accusantium architecto ex obcaecati ullam nihil illo. Sed, accusantium veritatis?
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum corrupti unde ad. Minima in debitis recusandae error. Ipsa a aut, pariatur similique totam cum blanditiis, nulla sint sed, soluta quisquam?
             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minima sapiente eaque amet mollitia incidunt labore blanditiis quasi corrupti quam exercitationem sequi id repudiandae ducimus vitae veritatis, sed consequuntur, ut architecto?',
+            'category' => 'review',
             'status' => 'ACTIVE',
         ]);
 
@@ -70,6 +72,7 @@ class DatabaseSeeder extends Seeder
             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sapiente sit asperiores laborum voluptates ipsam amet mollitia ad tenetur, voluptatem nulla, accusantium architecto ex obcaecati ullam nihil illo. Sed, accusantium veritatis?
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum corrupti unde ad. Minima in debitis recusandae error. Ipsa a aut, pariatur similique totam cum blanditiis, nulla sint sed, soluta quisquam?
             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minima sapiente eaque amet mollitia incidunt labore blanditiis quasi corrupti quam exercitationem sequi id repudiandae ducimus vitae veritatis, sed consequuntur, ut architecto?',
+            'category' => 'review',
             'status' => 'ACTIVE',
         ]);
 
@@ -89,21 +92,6 @@ class DatabaseSeeder extends Seeder
             'user_id' => '1',
             'post_id' => '3',
             'content' => 'nice post',
-        ]);
-
-        \App\Tag::create([
-            'post_id' => '1',
-            'name' => 'test',
-        ]);
-
-        \App\Tag::create([
-            'post_id' => '2',
-            'name' => 'test',
-        ]);
-
-        \App\Tag::create([
-            'post_id' => '3',
-            'name' => 'bestvape',
         ]);
     }
 }

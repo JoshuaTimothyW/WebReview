@@ -9,7 +9,6 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 
 // use JWTAuth;
 use App\Post;
-use App\Tag;
 use App\Member;
 use App\Comment;
 
@@ -29,7 +28,6 @@ class PostController extends Controller
             $post = $post->get();
             foreach($post as $i){
                 $i->members;
-                $i['tag'] = Tag::where('post_id',$i['id'])->get();
                 $i['comment'] = Comment::where('post_id',$i['id'])->get();
             }
         }
@@ -39,7 +37,6 @@ class PostController extends Controller
 
         // return json post
         return response()->json(compact('post','member'));
-        // return view('new_home',compact('post'));
     }
 
     // User Post
@@ -57,11 +54,11 @@ class PostController extends Controller
             $post = $post->get();
             foreach($post as $i){
                 $i->members;
-                $i['tag'] = Tag::where('post_id',$i['id'])->get();
                 $i['comment'] = Comment::where('post_id',$i['id'])->get();
             }
         }
         
+        // return json post
         return response()->json($post);
     }
 
@@ -75,12 +72,13 @@ class PostController extends Controller
         // Bikin objek post untuk diinsert ke db
         $post = new Post();
         $post->content = $request->content;
+        $post->category = $request->category;
         $post->user_id = $member->id;
         $post->status = "Active";
         $post->save();
 
+        // return json post
         return response()->json("Post Added Successful");
-        return redirect('home');
     }
     
 
@@ -90,10 +88,9 @@ class PostController extends Controller
         $post = Post::where('id',$id)->first();
     
         $post->members;
-        $post['tag'] = Tag::where('post_id',$i['id'])->get();
         $post['comment'] = Comment::where('post_id',$i['id'])->get();
 
-        // return response()->json($post);
-        return view('post',compact('post'));
+        return response()->json($post);
+        // return view('post',compact('post'));
     }
 }

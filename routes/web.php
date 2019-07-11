@@ -12,17 +12,16 @@ use Illuminate\Support\Facades\Request;
 |
 */
 
+/*
 Route::get('/',function(){
     return redirect('home');
 });
 
 Route::get('/json','Main@testdd');
-   // return response()->json(['name'=>'Hello World','state'=>'Gujarat']);
+   return response()->json(['name'=>'Hello World','state'=>'Gujarat']);
  
 
-Route::get('/register', function () {
-    return view('register');
-});
+
 
 Route::get('/login', function () {
     return view('login');
@@ -46,4 +45,9 @@ Route::middleware('mymiddleware')->group(function () {
         return view('post_add');
     });
     Route::post('/postadd/submit','PostController@create');
+});
+*/
+
+Route::get('/register', function () {
+    return view('register');
 });

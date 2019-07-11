@@ -12,7 +12,6 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 
 use JWTAuth;
 use App\Post;
-use App\Tag;
 use App\Member;
 use App\Comment;
 
@@ -57,10 +56,9 @@ class Main extends Controller
             'password' => 'required|min:6',
         ]);
 
+        // Return error kalau validate error
         if ($validator->fails()) {
-            return redirect('register')
-                        ->withErrors($validator)
-                        ->withInput();
+            return response()->json(['error'=>$validator->errors()]);
         }
         
         // Buat objek member baru untuk insert data
@@ -71,6 +69,7 @@ class Main extends Controller
         $member->password = bcrypt($request->password);
         $member->role = "Member";
         $member->img = "upload/avatar/default.png";
+        $member->status = "Active";
         $member->last_activity = Carbon::now();
         $member->save();
         
@@ -84,13 +83,12 @@ class Main extends Controller
         
         // Return json (Member dan Token)
         return response()->json(compact('member','token'));
-        // return redirect('home');
-        
     }
 
 
     // Login Function
     function login_account(Request $request){
+
         // Get email dan password
         $credentials = $request->only('email', 'password');
 
@@ -105,35 +103,49 @@ class Main extends Controller
             return response()->json(['error' => 'could_not_create_token']);
         }
 
-        // Data member dr verifikasi token
-        $member = JWTAuth::user();
+        // Expired Token (Detik)
+        $expired = auth('api')->factory()->getTTL() * 60;
         
-        return response()->json(compact('member','token'));       
+        // Return json (Member dan Token)
+        return response()->json(compact('token','expired'));   
     }
 
 
     // Get Profile Function
-    function profile($token){
+    function profile(){
         // Get member data dari token
-        $member = auth()->user();
+        $member = JWTAuth::user();
+
+        // Return json member
         return response()->json($member);
     }
+   
+    // Get Token
+    function getToken(){
+        // Get member data dari token
+        $user = JWTAuth::parseToken()->authenticate();
+        return response()->json($user);
 
+        // Return json member
+        return response()->json($token);
+    }
 
-    // Lagi Fix
-    function profile_edit(Request $request){
-
+    // Edit Profile Picture Function
+    function profile_pic(Request $request){
+        // Validate Input
         $validator = Validator::make($request->all(), [
             'avatar' => 'mimes:jpeg,jpg,png,gif|required',
         ]);
-
+        
+        // Return error kalau validate error
         if ($validator->fails()) {
-            return redirect('profile')
-                        ->withErrors($validator)
-                        ->withInput();
+            return response()->json(['error'=>$validator->errors()]);
         }
 
-        $member = Member::find(session()->get('member')->id);
+        // Member data from token
+        $member = JWTAuth::user();
+        
+        // Store picture to Storage, make folder if not exist
         $pic = $request->file('avatar');
 
         if(!Storage::exists('upload/avatar/'.$member->id)){
@@ -147,23 +159,31 @@ class Main extends Controller
         $path = $pic->store('upload/avatar/'.$member->id);
         $member->img = $path;
         $member->save();
-        $request->session()->put('member',$member);
+        
+        // Redirect to Profile
         return redirect('profile');
     }
 
-
     // Lagi Fix
+    function profile_edit(Request $request){
+
+    }
+
+    // Reset Profile Picture
     function reset(Request $request){
-        $member = Member::find(session()->get('member')->id);
+        // Member data from token
+        $member = JWTAuth::user();
         
+        // Set Profile Picture to Default
         if($member->img != 'upload/avatar/default.png'){
             Storage::delete($member->img);
         }
 
         $member->img = 'upload/avatar/default.png';
         $member->save();
-        $request->session()->put('member',$member);
-        return redirect('profile');
+
+        // Return json member
+        return response()->json($member);
     }
 
 

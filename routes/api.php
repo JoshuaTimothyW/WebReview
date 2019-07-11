@@ -28,21 +28,20 @@ Route::get('/','PostController@index_post');
 Route::post('register/submit','Main@register_account');
 Route::post('login/submit','Main@login_account');
 
-Route::get('home','Main@testdd');
-
 Route::middleware("mymiddleware")->group(function() {
     // User
-    Route::get('profile/{token}','Main@profile');
-    Route::get('logout/{token}','Main@logout');
-    // Route::post('profile/submit','Main@profile_edit');
-    // Route::get('profile/reset','Main@reset');
+    Route::get('profile','Main@profile');
+    Route::get('logout','Main@logout');
+    Route::post('profilepic/submit','Main@profile_pic');
+    Route::post('profile/submit','Main@profile_edit');
+    Route::get('profile/reset','Main@reset');
     
 
     // Post
-    Route::get('/{token}','PostController@index_post');
-    Route::get('mypost/{token}','PostController@mypost');
-    Route::post('postadd/submit/{token}','PostController@create');
+    Route::get('mypost','PostController@mypost');
+    Route::post('postadd/submit/','PostController@create');
     
+
     // Comment
     // Route::post('commentadd/submit/{token}','CommentController@comment_add');
 });
