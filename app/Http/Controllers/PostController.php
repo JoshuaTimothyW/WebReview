@@ -11,11 +11,12 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 use App\Post;
 use App\Member;
 use App\Comment;
+use App\Media;
 
 class PostController extends Controller
 {
     // List Post Function
-    public function index_post(Request $request)
+    public function index_post()
     {
         
         // Pilih post yang statusnya masih ACTIVE, di sort desc based on date
@@ -28,6 +29,7 @@ class PostController extends Controller
             $post = $post->get();
             foreach($post as $i){
                 $i->members;
+                $i['media'] = Media::where('post_id',$i['id'])->get();
                 $i['comment'] = Comment::where('post_id',$i['id'])->get();
             }
         }
@@ -36,17 +38,18 @@ class PostController extends Controller
         $member = auth()->user();
 
         // return json post
-        return response()->json(compact('post','member'));
+        // return response()->json(compact('post','member'));
+        return view('new_home',compact('post','member'));
     }
+
 
     // User Post
     function mypost(){
         // Member data dari token
         $member = auth()->user();
-
+ 
         // Select semua post
         $post = Post::where('user_id',$member->id);
-
         // Cek post ada atau tidak
         if ($post->count() < 1) {
             $post = "No Post";
@@ -76,6 +79,7 @@ class PostController extends Controller
         $post->user_id = $member->id;
         $post->status = "Active";
         $post->save();
+
 
         // return json post
         return response()->json("Post Added Successful");

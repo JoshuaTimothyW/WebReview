@@ -6,11 +6,11 @@
     @foreach ($post as $item)
             <div class="card mt-1">
                         <div class="card-title border bg-white">
-                                <a href="{{ url($item->members->name) }}">
+                                <a href="{{ url('api/'.$item->members->name) }}">
                                     <img class="rounded-circle m-2" src=" {{ $item->members->img }} " alt="pp" height="50px" width="50px">
                                 </a>
                                 <div class="btn-group-vertical">
-                                    <a href="{{ url($item->members->name) }}">
+                                    <a href="{{ url('api/'.$item->members->name) }}">
                                         <strong class="text-primary">
                                             {{ $item->members->name }}
                                         </strong>
@@ -47,6 +47,7 @@
                                                 </strong>
                                             </a> 
                                             {{ $item->create_at }}
+                                            <h5 class="bold text-primary">{{$item->category}}</h5>
                                         </div>  
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
@@ -56,10 +57,6 @@
                                     <h5 class="modal-title container-fluid"> {{ $item->title }} </h5>                                                      
                                     <div class="container-fluid">
                                         <p>
-                                            @foreach ($item['tag'] as $tag)
-                                                #{{$tag->name}}
-                                                <br>
-                                            @endforeach
                                             {{ $item->content }}
                                         </p>
                                     </div>

@@ -22,6 +22,10 @@ class Post extends Model
         return $this->hasMany(Tag::class,'id');
     }
 
+    function media(){
+        return $this->hasMany('App\Media');
+    }
+
     function getCreateAtAttribute()
     {
         return \Carbon\Carbon::parse($this->attributes['created_at'])

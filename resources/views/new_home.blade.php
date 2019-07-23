@@ -102,6 +102,15 @@
                                     {{ csrf_field() }}                            
                                     <div class="modal-body">                                                      
                                         <textarea name="content" class="container-fluid"></textarea>
+                                        <br><br>
+                                        <select name="category" class="container-fluid">
+                                            <option value="" selected>Choose Category...</option>
+                                            <option value="Review">Review</option>
+                                            <option value="Pod">Pod</option>
+                                            <option value="E Liquid">E Liquid</option>
+                                            <option value="Mod">Mod</option>
+                                            <option value="Atomizer">Atomizer</option>
+                                        </select> 
                                     </div>
                                     <button type="submit" class="btn btn-primary container-fluid">Submit</button>
                                 </form>
@@ -131,13 +140,13 @@
                     @endif --}}
                     <div class="text-center m-3">
                         <div class="border container-fluid p-2">
-                                <a href=" {{url('login')}} ">
+                                <a href=" {{url('api/login')}} ">
                                     <button class="btn btn-lg btn-primary">Login</button>                                
                                 </a>
                         </div>
                         <h5>Or</h5>
                         <div class="border container-fluid p-2">
-                            <a href=" {{url('register')}} ">
+                            <a href=" {{url('api/register')}} ">
                                 <button class="btn btn-primary btn-lg">Register</button>
                             </a>
                         </div>

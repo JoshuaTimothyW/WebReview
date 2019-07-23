@@ -68,7 +68,7 @@ class Main extends Controller
         $member->name = $request->username;
         $member->password = bcrypt($request->password);
         $member->role = "Member";
-        $member->img = "upload/avatar/default.png";
+        $member->img = "/upload/avatar/default.png";
         $member->status = "Active";
         $member->last_activity = Carbon::now();
         $member->save();
@@ -80,31 +80,36 @@ class Main extends Controller
 
         // Generate Token
         $token = JWTAuth::fromUser($member);
+
+        // Get Token Timeline
+        $expired = JWTAuth::factory()->getTTL()*60;
         
         // Return json (Member dan Token)
-        return response()->json(compact('member','token'));
+        return response()->json(compact('member','token','expired'));
     }
 
 
     // Login Function
     function login_account(Request $request){
-
         // Get email dan password
         $credentials = $request->only('email', 'password');
+        
+        // Attempt user untk check data
+        $token = JWTAuth::attempt($credentials);
+
+        // Get Token Timeline
+        $expired = JWTAuth::factory()->getTTL()*60;
 
         // Verifikasi token dengan user di db
         try {
             # Data ada, tapi token salah
-            if (!$token = JWTAuth::attempt($credentials)) {
+            if (!$token) {
                 return response()->json(['error' => 'invalid_credentials']);
             }
         }catch (JWTException $e) {
             # Fail to generate token
             return response()->json(['error' => 'could_not_create_token']);
         }
-
-        // Expired Token (Detik)
-        $expired = auth('api')->factory()->getTTL() * 60;
         
         // Return json (Member dan Token)
         return response()->json(compact('token','expired'));   
@@ -112,20 +117,19 @@ class Main extends Controller
 
 
     // Get Profile Function
-    function profile(){
-        // Get member data dari token
-        $member = JWTAuth::user();
-
+    function profile($name){
+        // Get member data
+        $member = Member::where('name',$name)->get();
+         
         // Return json member
         return response()->json($member);
     }
    
     // Get Token
     function getToken(){
-        // Get member data dari token
-        $user = JWTAuth::parseToken()->authenticate();
-        return response()->json($user);
-
+        // Get token
+        $token = JWTAuth::getToken();
+        
         // Return json member
         return response()->json($token);
     }
@@ -192,7 +196,6 @@ class Main extends Controller
         // Forget the token and back to home
         auth()->logout();
         return response()->json("Logout Successful");
-        return redirect('home');
     }
 }
 
